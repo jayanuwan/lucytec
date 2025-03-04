@@ -3,6 +3,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Table from "../components/Table";
+import Chart from "../components/Chart";
 import { useSelector, useDispatch } from "react-redux";
 import * as actions from "../actions/users";
 
@@ -16,6 +17,8 @@ const Home = () => {
 
   useEffect(() => {
     setUsers(userList);
+
+    console.log("user list", userList);
   }, [userList]);
 
   useEffect(() => {
@@ -23,15 +26,14 @@ const Home = () => {
   }, [dispatch]);
 
   return (
-    <React.Fragment>
-      <CssBaseline />
-      <Container maxWidth="lg">
-        <Box sx={{ bgcolor: "#cfe8fc", height: "10vh" }}>dfdf</Box>
-        <Box>
-          <Table data={users} />
-        </Box>
-      </Container>
-    </React.Fragment>
+    <Container maxWidth="lg">
+      <Box sx={{ bgcolor: "#e7eef4", height: "40vh" }}>
+        <Chart></Chart>
+      </Box>
+      <Box>
+        <Table data={userList} />
+      </Box>
+    </Container>
   );
 };
 
