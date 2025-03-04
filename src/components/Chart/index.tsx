@@ -26,14 +26,28 @@ const Chart = ({ data }: any) => {
 
   console.log(setA);
 
+  const chartSetting = {
+    yAxis: [
+      {
+        label: "Count",
+      },
+    ],
+  };
+
   return (
     <BarChart
+      title="Age Details"
       series={[{ data: [setA.length, setB.length, setC.length, setD.length] }]}
-      height={290}
+      height={300}
       xAxis={[
-        { data: ["10-30", "30-50", "50-70", "70-100"], scaleType: "band" },
+        {
+          data: ["10-30", "30-50", "50-70", "70-100"],
+          scaleType: "band",
+          label: "Age range",
+        },
       ]}
       margin={{ top: 10, bottom: 30, left: 40, right: 10 }}
+      {...chartSetting}
     />
   );
 };
