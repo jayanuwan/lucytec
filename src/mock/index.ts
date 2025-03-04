@@ -1,20 +1,20 @@
-import { createServer } from "miragejs"
+import { createServer } from "miragejs";
 
-export function makeServer () {
-    return createServer({
-        routes() {
-            this.namespace = "api"
-        
-            this.get("/users", () => {
-              return {
-                movies: [
-                  { id: 1, name: "Inception", year: 2010 },
-                  { id: 2, name: "Interstellar", year: 2014 },
-                  { id: 3, name: "Dunkirk", year: 2017 },
-                ],
-              }
-            })
-          },
-    })
+export function makeServer() {
+  return createServer({
+    routes() {
+      this.namespace = "api";
+
+      this.get("/users", () => {
+        return {
+          users: [
+            { name: "Matin", age: 34, city: "Eskilstuna" },
+            { name: "Jhon", age: 31, city: "Eskilstuna" },
+            { name: "Lary", age: 24, city: "Eskilstuna" },
+            { name: "Happy", age: 44, city: "Eskilstuna" },
+          ],
+        };
+      });
+    },
+  });
 }
-
