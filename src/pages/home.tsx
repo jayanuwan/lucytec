@@ -28,7 +28,7 @@ const Home = () => {
   return (
     <Container maxWidth="lg">
       <Box sx={{ bgcolor: "#e7eef4", height: "40vh" }}>
-        <Chart></Chart>
+        <Chart data={userList}></Chart>
       </Box>
       <Box>
         <Table data={userList} />
