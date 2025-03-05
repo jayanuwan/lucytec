@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { AgGridReact } from "ag-grid-react";
-import type { ColDef, GridApi } from "ag-grid-community";
+import type { ColDef, GridApi, IsFullWidthRowParams } from "ag-grid-community";
 
 let gridApi: GridApi;
 
@@ -21,6 +21,7 @@ const Table = ({ data }: any) => {
   ]);
   const gridOptions = {
     pagination: true,
+    onGridReady: (event: any) => event.api.sizeColumnsToFit(),
   };
 
   useEffect(() => {
@@ -34,7 +35,6 @@ const Table = ({ data }: any) => {
     { field: "city", filter: true },
   ]);
 
-  console.log("fffff", gridData);
   return (
     <>
       <div style={{ width: "100%", height: 500 }}>
