@@ -23,24 +23,42 @@ import ListItemText from "@mui/material/ListItemText";
 import ListItemButton from "@mui/material/ListItemButton";
 import { ListItemIcon } from "@mui/material";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
+import Snackbar, { SnackbarCloseReason } from "@mui/material/Snackbar";
 
 const drawerWidth = 240;
 
-const selector = ({ user: { userList } }: any) => ({ userList });
+const selector = ({ user: { userList, newUser } }: any) => ({
+  userList,
+  newUser,
+});
 
 const Home = () => {
   const dispatch = useDispatch();
   const { userList = [] } = useSelector(selector);
+  const { newUser = {} } = useSelector(selector);
 
   const [users, setUsers] = useState([]);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
+  const [open, setOpen] = useState({ status: true, message: "" });
 
   useEffect(() => {
     setUsers(userList);
 
     console.log("user list", userList);
   }, [userList]);
+
+  useEffect(() => {
+    if (newUser.name) {
+      setUsers(userList.push(newUser));
+      setOpen({
+        status: true,
+        message: "Record added",
+      });
+    }
+
+    console.log("user list", userList);
+  }, [newUser]);
 
   useEffect(() => {
     dispatch(actions.getUsers.request());
@@ -59,6 +77,26 @@ const Home = () => {
     if (!isClosing) {
       setMobileOpen(!mobileOpen);
     }
+  };
+
+  const getFormData = (data: any) => {
+    console.log(data);
+
+    dispatch(actions.addUsers.request(data));
+  };
+
+  const handleClose = (
+    event: React.SyntheticEvent | Event,
+    reason?: SnackbarCloseReason
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen({
+      status: false,
+      message: "",
+    });
   };
 
   const drawer = (
@@ -162,10 +200,20 @@ const Home = () => {
             <Routes>
               <Route path="/chart" element={<Chart data={userList}></Chart>} />
               <Route path="/grid" element={<Table data={userList} />} />
-              <Route path="/form" element={<Form></Form>} />
+              <Route
+                path="/form"
+                element={<Form getFormData={getFormData} />}
+              />
             </Routes>
           </Box>
         </Box>
+        <Snackbar
+          anchorOrigin={{ vertical: "top", horizontal: "center" }}
+          open={open?.status}
+          autoHideDuration={2000}
+          message={open.message}
+          onClose={handleClose}
+        />
       </BrowserRouter>
       {/* <Container maxWidth="xl">
         <Box sx={{ bgcolor: "#e7eef4", height: "40vh" }}>

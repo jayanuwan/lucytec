@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { AgGridReact } from "ag-grid-react";
 import type { ColDef, GridApi, IsFullWidthRowParams } from "ag-grid-community";
+import DeleteButton from "./DeleteButton";
 
 let gridApi: GridApi;
 
@@ -33,6 +34,7 @@ const Table = ({ data }: any) => {
     { field: "name", filter: true },
     { field: "age", filter: true },
     { field: "city", filter: true },
+    { cellRenderer: DeleteButton },
   ]);
 
   return (

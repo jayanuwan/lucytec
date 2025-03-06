@@ -6,12 +6,12 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 
 const validationSchema = yup.object({
-  name: yup.string().required("name is required"),
+  name: yup.string().required("Name is required"),
   age: yup
     .number()
     .min(2, "Age should be of minimum 2 characters length")
     .required("Age is required"),
-  city: yup.string().required("name is required"),
+  city: yup.string().required("City is required"),
 });
 
 const Form = ({ getFormData }: any) => {
@@ -23,7 +23,7 @@ const Form = ({ getFormData }: any) => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      getFormData(values);
     },
   });
 
