@@ -5,6 +5,9 @@ import {
   ADD_USERS,
   ADD_USERS_SUCCESS,
   ADD_USERS_FAILURE,
+  DELETE_USERS,
+  DELETE_USERS_SUCCESS,
+  DELETE_USERS_FAILURE,
 } from "../../actions/users";
 
 export const initialState = {
@@ -35,6 +38,20 @@ export default (state = initialState, action: { type: any; data: any }) => {
         newUser: action.data,
       };
     case ADD_USERS_FAILURE:
+      return {
+        ...state,
+        error: action.data,
+      };
+    case DELETE_USERS:
+      return state;
+    case DELETE_USERS_SUCCESS:
+      return {
+        ...state,
+        userList: state.userList.filter(
+          (item: any) => item.id !== action.data.id
+        ),
+      };
+    case DELETE_USERS_FAILURE:
       return {
         ...state,
         error: action.data,

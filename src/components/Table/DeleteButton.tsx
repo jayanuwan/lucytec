@@ -5,7 +5,7 @@ import type { CustomCellRendererProps } from "ag-grid-react";
 
 const DeleteButton = (params: CustomCellRendererProps | any) => {
   return (
-    <div onClick={params.prop(params.data)}>
+    <div onClick={() => params.propD(params.data)}>
       <DeleteIcon />
     </div>
   );

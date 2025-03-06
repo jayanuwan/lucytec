@@ -1,27 +1,28 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Suspense, lazy } from "react";
 import CssBaseline from "@mui/material/CssBaseline";
-import AppBar from "@mui/material/AppBar";
-import Divider from "@mui/material/Divider";
-import Drawer from "@mui/material/Drawer";
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
-import Container from "@mui/material/Container";
+import {
+  AppBar,
+  Divider,
+  Drawer,
+  Box,
+  Typography,
+  Toolbar,
+  IconButton,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemButton,
+  ListItemIcon,
+  CircularProgress,
+} from "@mui/material";
 import Table from "../components/Table";
 import Chart from "../components/Chart";
 import Form from "../components/Form";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import * as actions from "../actions/users";
-import Typography from "@mui/material/Typography";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
 import MailIcon from "@mui/icons-material/Mail";
 import MenuIcon from "@mui/icons-material/Menu";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
-import ListItemButton from "@mui/material/ListItemButton";
-import { ListItemIcon } from "@mui/material";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import Snackbar, { SnackbarCloseReason } from "@mui/material/Snackbar";
 
@@ -34,7 +35,7 @@ const selector = ({ user: { userList, newUser } }: any) => ({
 
 const Home = () => {
   const dispatch = useDispatch();
-  const { userList = [] } = useSelector(selector);
+  const { userList } = useSelector(selector);
   const { newUser = {} } = useSelector(selector);
 
   const [users, setUsers] = useState([]);
@@ -76,7 +77,8 @@ const Home = () => {
   };
 
   const getFormData = (data: any) => {
-    dispatch(actions.addUsers.request(data));
+    userList.push(data);
+    // dispatch(actions.addUsers.request(data));
   };
 
   const handleClose = (
@@ -94,11 +96,9 @@ const Home = () => {
   };
 
   const removeData = (data: any) => {
-    const result = userList.filter((item: any) => item.id !== data.id);
-    setUsers(result);
+    dispatch(actions.deleteUsers.success(data));
 
-    console.log(data);
-    console.log(result);
+    // debugger;
   };
 
   const drawer = (
@@ -202,7 +202,11 @@ const Home = () => {
               <Route path="/chart" element={<Chart data={users}></Chart>} />
               <Route
                 path="/grid"
-                element={<Table data={users} {...removeData} />}
+                element={
+                  <Suspense fallback={<CircularProgress />}>
+                    <Table data={users} removeData={removeData} />
+                  </Suspense>
+                }
               />
               <Route
                 path="/form"
@@ -219,22 +223,6 @@ const Home = () => {
           onClose={handleClose}
         />
       </BrowserRouter>
-      {/* <Container maxWidth="xl">
-        <Box sx={{ bgcolor: "#e7eef4", height: "40vh" }}>
-          <Chart data={userList}></Chart>
-        </Box>
-
-        <Box>
-          <Grid container spacing={2} marginTop={2}>
-            <Grid item xs={12} lg={8}>
-              <Table data={userList} />
-            </Grid>
-            <Grid item xs={12} lg={4}>
-              <Form></Form>
-            </Grid>
-          </Grid>
-        </Box>
-      </Container> */}
     </>
   );
 };

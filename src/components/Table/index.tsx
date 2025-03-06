@@ -12,6 +12,7 @@ interface IRow {
 }
 
 const Table = ({ data, removeData }: any) => {
+  const [gridData, setGridData] = useState<Array<IRow>>(data || []);
   const [rowData, setRowData] = useState<IRow[]>([
     {
       name: "Jay",
@@ -24,15 +25,19 @@ const Table = ({ data, removeData }: any) => {
     onGridReady: (event: any) => event.api.sizeColumnsToFit(),
   };
 
+  useEffect(() => {
+    setGridData(data);
+    console.log(" Grid data", data);
+  }, [data]);
+
   const [colDefs, setColDefs] = useState<ColDef<IRow | any>[] | any>([
     { field: "name", filter: true },
     { field: "age", filter: true },
     { field: "city", filter: true },
     {
-      cellRenderer: (params: any) => <DeleteButton {...params} />,
-      cellRendererParams: {
-        prop: (data: any) => removeData,
-      },
+      cellRenderer: (params: any) => (
+        <DeleteButton {...params} propD={removeData} />
+      ),
     },
   ]);
 

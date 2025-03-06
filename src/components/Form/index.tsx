@@ -4,6 +4,7 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
+import { VpnLock } from "@mui/icons-material";
 
 const validationSchema = yup.object({
   name: yup.string().required("Name is required"),
@@ -17,13 +18,17 @@ const validationSchema = yup.object({
 const Form = ({ getFormData }: any) => {
   const formik = useFormik({
     initialValues: {
-      name: "Jay",
-      age: 39,
-      city: "Colombo",
+      id: "",
+      name: "",
+      age: 0,
+      city: "",
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
+      values.id = "id" + Math.random().toString(16).slice(2);
+      values.age = Number(values.age);
       getFormData(values);
+      formik.resetForm();
     },
   });
 
