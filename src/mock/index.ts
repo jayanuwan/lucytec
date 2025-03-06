@@ -36,7 +36,7 @@ export function makeServer() {
           const record = {
             id: "id" + Math.random().toString(16).slice(2),
             name: names[Math.floor(Math.random() * names.length)],
-            age: Math.floor(Math.random() * 53) + 28, // Random age between 18 and 70
+            age: Math.floor(Math.random() * 53) + 28,
             city: cities[Math.floor(Math.random() * cities.length)],
           };
           data.push(record);
