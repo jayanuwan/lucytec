@@ -27,7 +27,6 @@ const Table = ({ data, removeData }: any) => {
 
   useEffect(() => {
     setGridData(data);
-    console.log(" Grid data", data);
   }, [data]);
 
   const [colDefs, setColDefs] = useState<ColDef<IRow | any>[] | any>([

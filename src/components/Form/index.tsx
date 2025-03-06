@@ -4,7 +4,6 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import { VpnLock } from "@mui/icons-material";
 
 const validationSchema = yup.object({
   name: yup.string().required("Name is required"),

@@ -24,8 +24,6 @@ const Chart = ({ data }: any) => {
       }
     });
 
-  console.log(setA);
-
   const chartSetting = {
     yAxis: [
       {

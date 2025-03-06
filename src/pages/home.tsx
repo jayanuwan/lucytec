@@ -33,7 +33,7 @@ const selector = ({ user: { userList, newUser } }: any) => ({
   newUser,
 });
 
-const Home = () => {
+const Home = ({ setMode }: any) => {
   const dispatch = useDispatch();
   const { userList } = useSelector(selector);
   const { newUser = {} } = useSelector(selector);
@@ -78,6 +78,10 @@ const Home = () => {
 
   const getFormData = (data: any) => {
     userList.push(data);
+    setOpen({
+      status: true,
+      message: "Added succesfully",
+    });
     // dispatch(actions.addUsers.request(data));
   };
 
@@ -104,6 +108,7 @@ const Home = () => {
   const drawer = (
     <div>
       <Toolbar />
+
       <Divider />
       <List>
         {["Grid", "Chart", "Form"].map((text, index) => (
@@ -188,6 +193,7 @@ const Home = () => {
               {drawer}
             </Drawer>
           </Box>
+
           <Box
             component="main"
             sx={{
@@ -197,7 +203,6 @@ const Home = () => {
             }}
           >
             <Toolbar />
-
             <Routes>
               <Route path="/chart" element={<Chart data={users}></Chart>} />
               <Route
