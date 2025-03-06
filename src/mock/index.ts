@@ -2,15 +2,6 @@ import { createServer } from "miragejs";
 
 export function makeServer() {
   return createServer({
-    seeds(server) {
-      server.db.loadData({
-        movies: [
-          { title: "Interstellar" },
-          { title: "Inception" },
-          { title: "Dunkirk" },
-        ],
-      });
-    },
     routes() {
       this.namespace = "api";
 
