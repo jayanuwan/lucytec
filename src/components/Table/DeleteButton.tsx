@@ -3,15 +3,12 @@ import DeleteIcon from "@mui/icons-material/Delete";
 
 import type { CustomCellRendererProps } from "ag-grid-react";
 
-export default (
-  params: CustomCellRendererProps,
-  deleteData: (data: any) => void
-) => {
-  console.log(params);
-
+const DeleteButton = (params: CustomCellRendererProps | any) => {
   return (
-    <div onClick={() => deleteData(params.value)}>
+    <div onClick={params.prop(params.data)}>
       <DeleteIcon />
     </div>
   );
 };
+
+export default DeleteButton;

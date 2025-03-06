@@ -44,8 +44,6 @@ const Home = () => {
 
   useEffect(() => {
     setUsers(userList);
-
-    console.log("user list", userList);
   }, [userList]);
 
   useEffect(() => {
@@ -56,8 +54,6 @@ const Home = () => {
         message: "Record added",
       });
     }
-
-    console.log("user list", userList);
   }, [newUser]);
 
   useEffect(() => {
@@ -80,8 +76,6 @@ const Home = () => {
   };
 
   const getFormData = (data: any) => {
-    console.log(data);
-
     dispatch(actions.addUsers.request(data));
   };
 
@@ -99,14 +93,22 @@ const Home = () => {
     });
   };
 
+  const removeData = (data: any) => {
+    const result = userList.filter((item: any) => item.id !== data.id);
+    setUsers(result);
+
+    console.log(data);
+    console.log(result);
+  };
+
   const drawer = (
     <div>
       <Toolbar />
       <Divider />
       <List>
-        {["Grid", "Chart", "Form", "All"].map((text, index) => (
-          <Link to={text.toLowerCase()}>
-            <ListItem key={text} disablePadding onClick={handleDrawerToggle}>
+        {["Grid", "Chart", "Form"].map((text, index) => (
+          <Link to={text.toLowerCase()} key={text}>
+            <ListItem disablePadding onClick={handleDrawerToggle}>
               <ListItemButton>
                 <ListItemIcon>
                   {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
@@ -152,7 +154,6 @@ const Home = () => {
             sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
             aria-label="mailbox folders"
           >
-            {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
             <Drawer
               variant="temporary"
               open={mobileOpen}
@@ -198,8 +199,11 @@ const Home = () => {
             <Toolbar />
 
             <Routes>
-              <Route path="/chart" element={<Chart data={userList}></Chart>} />
-              <Route path="/grid" element={<Table data={userList} />} />
+              <Route path="/chart" element={<Chart data={users}></Chart>} />
+              <Route
+                path="/grid"
+                element={<Table data={users} {...removeData} />}
+              />
               <Route
                 path="/form"
                 element={<Form getFormData={getFormData} />}
